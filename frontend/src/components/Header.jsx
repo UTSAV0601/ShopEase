@@ -8,7 +8,7 @@ const Header = () => (
     <Toolbar sx={{ justifyContent: 'space-between' }}>
       <Typography variant="h6" fontWeight="bold">ShopEase</Typography>
 
-      <Box sx={{ display: 'flex', alignItems: 'center', width: '40%', bgcolor: 'white', px: 2, borderRadius: 2 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', width: '60%', bgcolor: 'white', px: 2, borderRadius: 2 }}>
         <SearchIcon color="action" />
         <InputBase placeholder="Search products..." fullWidth sx={{ ml: 1 }} />
       </Box>

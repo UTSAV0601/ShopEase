@@ -1,41 +1,51 @@
-import { Box, Container, Typography, Grid } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import ProductCard from '../components/ProductCard';
 import Header from '../components/Header';
 import FilterSidebar from '../components/FilterSidebar';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const dummyProducts = Array.from({ length: 12 }).map((_, i) => ({
-  id: i + 1,
-  title: `Product ${i + 1}`,
-  price: (Math.random() * 100).toFixed(2),
-  image: `https://picsum.photos/seed/phone${i}/400/400`
-}));
+const GridWall = () => {
+  const [products, setProducts] = useState([]);
 
-const GridWall = () => (
-  <Box sx={{ minHeight: '100vh', backgroundColor: '#f5f5f5' }}>
-    <Header />
-    <Container maxWidth="xl" sx={{ mt: 4 }}>
-      <Box sx={{ display: 'flex', gap: 4 }}>
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/products')
+      .then(response => setProducts(response.data))
+      .catch(error => console.error('Error fetching products:', error));
+  }, []);
+
+  return (
+    <Box sx={{ width: '100%', minHeight: '100vh', bgcolor: '#f5f5f5' }}>
+      <Header />
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          px: 4,
+          mt: 4,
+        }}
+      >
         {/* Sidebar */}
-        <Box sx={{ flex: '0 0 250px' }}>
+        <Box sx={{ width: '250px', flexShrink: 0 }}>
           <FilterSidebar />
         </Box>
 
-        {/* Products Section */}
-        <Box sx={{ flexGrow: 1 }}>
+        {/* Main Product Grid */}
+        <Box sx={{ flexGrow: 1, ml: 4 }}>
           <Typography variant="h5" fontWeight="bold" gutterBottom>
             Explore Products
           </Typography>
           <Grid container spacing={3}>
-            {dummyProducts.map(product => (
-              <Grid item xs={12} sm={6} md={4} lg={3} key={product.id}>
+            {products.map(product => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={product._id}>
                 <ProductCard product={product} />
               </Grid>
             ))}
           </Grid>
         </Box>
       </Box>
-    </Container>
-  </Box>
-);
+    </Box>
+  );
+};
 
 export default GridWall;

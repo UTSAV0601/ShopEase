@@ -1,19 +1,19 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';  // <-- no Router here
 import theme from './theme/theme';
 import GridWall from './pages/GridWall';
 import ProductDetails from './pages/ProductDetails';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        <Routes>
-          <Route path="/" element={<GridWall />} />
-          <Route path="/product-details/:productId" element={<ProductDetails />} />
-        </Routes>
-      </Router>
+      <Routes>
+        <Route path="/" element={<GridWall />} />
+        <Route path="/product-details/:id" element={<ProductDetails />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </ThemeProvider>
   );
 }
